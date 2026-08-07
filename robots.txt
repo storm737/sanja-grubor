@@ -1,0 +1,7 @@
+# ZAMENITI: adresa sitemap-a ispod koristi privremeni domen sanjagrubor.rs.
+# Kada sajt dobije pravi domen, ispravite ga ovde.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.sanjagrubor.rs/sitemap.xml

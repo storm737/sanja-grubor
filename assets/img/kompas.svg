@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="presentation">
+  <defs>
+    <!-- Duži krak (sever/jug/istok/zapad) -->
+    <path id="krak-dug" d="M100 100 L91.5 91.5 L100 12 L108.5 91.5 Z"/>
+    <!-- Kraći krak (dijagonale) -->
+    <path id="krak-kratak" d="M100 100 L94.5 94.5 L100 40 L105.5 94.5 Z"/>
+  </defs>
+
+  <g fill="#C24178">
+    <use href="#krak-dug"/>
+    <use href="#krak-dug" transform="rotate(90 100 100)"/>
+    <use href="#krak-dug" transform="rotate(180 100 100)"/>
+    <use href="#krak-dug" transform="rotate(270 100 100)"/>
+    <use href="#krak-kratak" transform="rotate(45 100 100)"/>
+    <use href="#krak-kratak" transform="rotate(135 100 100)"/>
+    <use href="#krak-kratak" transform="rotate(225 100 100)"/>
+    <use href="#krak-kratak" transform="rotate(315 100 100)"/>
+  </g>
+
+  <g fill="none" stroke="#C24178">
+    <circle cx="100" cy="100" r="96" stroke-width="1.1"/>
+    <!-- Podeoci: isprekidan krug daje utisak skale instrumenta -->
+    <circle cx="100" cy="100" r="88" stroke-width="4" stroke-dasharray="1.6 9.9"/>
+    <circle cx="100" cy="100" r="78" stroke-width="0.8"/>
+    <circle cx="100" cy="100" r="8" stroke-width="2.2"/>
+  </g>
+</svg>
