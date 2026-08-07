@@ -103,6 +103,35 @@
     });
   }
 
+  /* --- MailerLite forme (besplatni resursi, newsletter) ------------------
+     Forma i dalje šalje pravi POST ka MailerLite-u (ništa se ne gubi), ali
+     odgovor ide u skriveni iframe umesto u novi tab — posetilac na sajtu
+     odmah vidi poruku umesto golog JSON teksta poput {"success":true}. */
+  var mailForms = document.querySelectorAll(".mail-form");
+
+  if (mailForms.length) {
+    var mlCilj = document.createElement("iframe");
+    mlCilj.name = "ml-cilj";
+    mlCilj.setAttribute("aria-hidden", "true");
+    mlCilj.tabIndex = -1;
+    mlCilj.style.cssText = "position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; border:0;";
+    document.body.appendChild(mlCilj);
+
+    Array.prototype.forEach.call(mailForms, function (f) {
+      f.setAttribute("target", "ml-cilj");
+
+      f.addEventListener("submit", function () {
+        var tekst = f.getAttribute("data-uspeh") ||
+          "Hvala na prijavi! Proverite inbox i potvrdite mejl.";
+        var poruka = document.createElement("p");
+        poruka.className = "mail-hvala";
+        poruka.textContent = tekst;
+        poruka.setAttribute("role", "status");
+        f.replaceWith(poruka);
+      });
+    });
+  }
+
   /* --- Zid utisaka: prikaži prvih N, ostalo na dugme --------------------
      Skraćivanje radi samo kada JS radi, pa su bez njega svi utisci vidljivi. */
   var wall = document.querySelector("[data-collapsible]");
