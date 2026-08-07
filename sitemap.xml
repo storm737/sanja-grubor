@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ZAMENITI: "https://www.sanjagrubor.rs" je privremeni domen dok sajt ne dobije pravi. -->
+<!-- Domen: sanjagrubor.com -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.sanjagrubor.rs/</loc>
+    <loc>https://sanjagrubor.com/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/o-meni.html</loc>
+    <loc>https://sanjagrubor.com/o-meni.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/kako-vam-mogu-pomoci.html</loc>
+    <loc>https://sanjagrubor.com/kako-vam-mogu-pomoci.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/unutrasnji-kompas.html</loc>
+    <loc>https://sanjagrubor.com/unutrasnji-kompas.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/blog.html</loc>
+    <loc>https://sanjagrubor.com/blog.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/blog-da-li-smo-normalni.html</loc>
+    <loc>https://sanjagrubor.com/blog-da-li-smo-normalni.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/blog-psihologija-nauka-psihoterapija-umetnost.html</loc>
+    <loc>https://sanjagrubor.com/blog-psihologija-nauka-psihoterapija-umetnost.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/blog-psihoterapija-mesto-sretanja.html</loc>
+    <loc>https://sanjagrubor.com/blog-psihoterapija-mesto-sretanja.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/resursi.html</loc>
+    <loc>https://sanjagrubor.com/resursi.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/utisci.html</loc>
+    <loc>https://sanjagrubor.com/utisci.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.sanjagrubor.rs/kontakt.html</loc>
+    <loc>https://sanjagrubor.com/kontakt.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
