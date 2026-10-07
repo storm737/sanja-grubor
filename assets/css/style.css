@@ -422,58 +422,43 @@ p, li, blockquote, h1, h2, h3, dd { overflow-wrap: break-word; }
 .newsletter h2 { margin-bottom: .9rem; }
 .newsletter p { color: var(--ink-soft); }
 
-.mail-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .65rem;
-  margin-top: 1.5rem;
-}
-.mail-form input[type="email"],
-.mail-form input[type="text"] {
-  flex: 1 1 230px;
-  min-width: 0;
-  font: inherit;
-  font-size: 1rem;
-  padding: .85rem 1rem;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  background: rgba(255, 255, 255, .9);
-  color: var(--ink);
-}
-.mail-form .btn { flex: 0 0 auto; }
-
-.mail-consent {
-  display: flex;
-  gap: .65rem;
-  align-items: flex-start;
-  font-size: .85rem;
-  color: var(--ink-soft);
-  margin-top: 1rem;
-  line-height: 1.5;
-}
-.mail-consent input { margin-top: .25rem; flex: none; }
-
 .mail-note { font-size: .82rem; color: var(--ink-soft); margin-top: .9rem; }
 
-/* Zamenjuje formu posle uspešnog slanja — vidi main.js. */
-.mail-hvala {
-  display: flex;
-  align-items: flex-start;
-  gap: .6rem;
-  font-size: .95rem;
-  line-height: 1.5;
-  color: var(--ink);
-  background: rgba(255, 255, 255, .6);
+/* Dijalog za zahtev besplatnog materijala — vidi main.js. */
+.zahtev {
+  width: min(30rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
   border: 1px solid var(--line);
+  border-left: 3px solid var(--pink);
   border-radius: 3px;
-  padding: .9rem 1rem;
-  margin-top: auto;
+  background: var(--paper);
+  color: var(--ink);
 }
-.mail-hvala::before { content: "✓"; color: var(--pink-deep); font-weight: 700; flex: none; }
-
-@media (max-width: 640px) {
-  .mail-form .btn { flex: 1 1 100%; justify-content: center; }
+.zahtev::backdrop { background: rgba(42, 30, 44, .5); }
+.zahtev h2 { margin-bottom: .6rem; padding-right: 2rem; }
+.zahtev-vodic { color: var(--ink-soft); margin-bottom: 1.5rem; }
+.obavezno { color: var(--pink-deep); font-weight: 700; }
+.zahtev-zatvori {
+  position: absolute;
+  top: .6rem;
+  right: .8rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  background: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
 }
+.zahtev-zatvori:hover { color: var(--pink-deep); }
+.zahtev-status { margin: 1rem 0 0; font-size: .95rem; line-height: 1.5; }
+.zahtev-status:empty { display: none; }
+.zahtev-status--ok { color: var(--ink); background: rgba(255,255,255,.7); border: 1px solid var(--line); padding: .9rem 1rem; margin-top: 0; }
+.zahtev-status--ok::before { content: "✓ "; color: var(--pink-deep); font-weight: 700; }
+.zahtev-status--greska { color: #8A1F3A; }
 
 /* --- Kartice Unutrašnjeg kompasa ----------------------------------------
    Svaka kartica ima lice (tema) i naličje (pitanje) — kao i u stvarnom setu,

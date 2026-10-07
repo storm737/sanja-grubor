@@ -85,7 +85,7 @@
       var telo = [
         "Ime i prezime: " + ime,
         "E-mail: " + email,
-        "Telefon: " + (telefon || "—"),
+        "Telefon: " + (telefon || "nije navedeno"),
         "",
         poruka
       ].join("\n");
@@ -93,7 +93,7 @@
       var adresa = form.getAttribute("data-mailto-form");
       window.location.href =
         "mailto:" + adresa +
-        "?subject=" + encodeURIComponent("Upit sa sajta — " + (ime || "novi upit")) +
+        "?subject=" + encodeURIComponent("Upit sa sajta: " + (ime || "novi upit")) +
         "&body=" + encodeURIComponent(telo);
 
       var status = form.querySelector("[data-form-status]");
@@ -103,31 +103,81 @@
     });
   }
 
-  /* --- MailerLite forme (besplatni resursi, newsletter) ------------------
-     Forma i dalje šalje pravi POST ka MailerLite-u (ništa se ne gubi), ali
-     odgovor ide u skriveni iframe umesto u novi tab — posetilac na sajtu
-     odmah vidi poruku umesto golog JSON teksta poput {"success":true}. */
-  var mailForms = document.querySelectorAll(".mail-form");
+  /* --- Zahtev za besplatni materijal -------------------------------------
+     Dugme „Zatražite…" je mailto link (radi i bez JS-a). Kada JS radi, umesto
+     toga otvara dijalog sa formom koja se šalje preko Netlify Forms (vidi
+     data-netlify na formi u resursi.html); Netlify prosleđuje poruku na e-mail. */
+  var dijalog = document.getElementById("zahtev-dialog");
 
-  if (mailForms.length) {
-    var mlCilj = document.createElement("iframe");
-    mlCilj.name = "ml-cilj";
-    mlCilj.setAttribute("aria-hidden", "true");
-    mlCilj.tabIndex = -1;
-    mlCilj.style.cssText = "position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; border:0;";
-    document.body.appendChild(mlCilj);
+  if (dijalog && typeof dijalog.showModal === "function") {
+    var zForma = document.getElementById("zahtev-forma");
+    var zStatus = zForma.querySelector("[data-status]");
+    var zDugme = zForma.querySelector("button[type=submit]");
+    var zPolja = zForma.querySelectorAll(".field, .form-note, [type=submit]");
+    var zVodic = "";
 
-    Array.prototype.forEach.call(mailForms, function (f) {
-      f.setAttribute("target", "ml-cilj");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-vodic]"), function (a) {
+      a.addEventListener("click", function (event) {
+        event.preventDefault();
+        zVodic = a.getAttribute("data-vodic");
+        zForma.querySelector("[data-vodic-naziv]").textContent = zVodic;
+        zForma.querySelector("[data-vodic-polje]").value = zVodic;
+        zForma.querySelector("[data-subject-polje]").value = "Zahtev za materijal: " + zVodic;
+        zStatus.textContent = "";
+        zStatus.className = "zahtev-status";
+        Array.prototype.forEach.call(zPolja, function (el) { el.style.display = ""; });
+        zDugme.disabled = false;
+        zDugme.textContent = "Pošaljite zahtev";
+        dijalog.showModal();
+      });
+    });
 
-      f.addEventListener("submit", function () {
-        var tekst = f.getAttribute("data-uspeh") ||
-          "Hvala na prijavi! Proverite inbox i potvrdite mejl.";
-        var poruka = document.createElement("p");
-        poruka.className = "mail-hvala";
-        poruka.textContent = tekst;
-        poruka.setAttribute("role", "status");
-        f.replaceWith(poruka);
+    var porukeGreske = {
+      ime: "Upišite vaše ime.",
+      prezime: "Upišite vaše prezime.",
+      email: "Upišite e-mail adresu na koju da pošaljem materijal."
+    };
+    Array.prototype.forEach.call(zForma.querySelectorAll("input[required]"), function (polje) {
+      polje.addEventListener("invalid", function () {
+        polje.setCustomValidity(
+          polje.validity.valueMissing ? porukeGreske[polje.name] : "Upišite punu e-mail adresu, na primer ime@primer.com."
+        );
+      });
+      polje.addEventListener("input", function () { polje.setCustomValidity(""); });
+    });
+
+    dijalog.querySelector("[data-zatvori]").addEventListener("click", function () { dijalog.close(); });
+    dijalog.addEventListener("click", function (event) {
+      if (event.target === dijalog) { dijalog.close(); }
+    });
+
+    zForma.addEventListener("submit", function (event) {
+      event.preventDefault();
+      zDugme.disabled = true;
+      zDugme.textContent = "Šaljem…";
+      zStatus.textContent = "";
+
+      var ime = zForma.elements["ime"].value.trim();
+
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(zForma)).toString()
+      }).then(function (odgovor) {
+        if (!odgovor.ok) { throw new Error("neuspeh"); }
+      }).then(function () {
+        Array.prototype.forEach.call(zPolja, function (el) { el.style.display = "none"; });
+        zStatus.className = "zahtev-status zahtev-status--ok";
+        zStatus.textContent = "Hvala, " + ime + "! Zahtev je poslat. Materijal „" + zVodic +
+          "“ stiže na vašu e-mail adresu u roku od jednog do dva dana.";
+        zForma.reset();
+      }).catch(function () {
+        zDugme.disabled = false;
+        zDugme.textContent = "Pošaljite zahtev";
+        zStatus.className = "zahtev-status zahtev-status--greska";
+        zStatus.innerHTML = "Slanje nije uspelo. Pokušajte ponovo ili mi pišite na " +
+          '<a href="mailto:sgterapeut@gmail.com?subject=' + encodeURIComponent("Zahtev za materijal: " + zVodic) +
+          '">sgterapeut@gmail.com</a>.';
       });
     });
   }

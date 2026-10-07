@@ -40,12 +40,11 @@ Sva mesta u kodu su označena komentarom `<!-- ZAMENITI: ... -->`.
    sa tačnim naslovom, brojem strana i opisom pročitanim iz stvarnog PDF-a:
    Vision Board, Kako govoriti bez gubitka sebe, 5 jezika ljubavi, Zašto
    ostajemo tamo gde nas boli (toksični odnosi), Visoka senzitivnost, Zdrava
-   empatija. Svaka kartica ima svoju formu — treba samo upisati adresu iz
-   MailerLite-a (vidi „Preuzimanje uz e-mail i newsletter" ispod).
+   empatija. Svaka kartica ima dugme „Zatražite vodič“ (mailto link, vidi
+   „Besplatni resursi (slanje na zahtev)“ ispod).
 
-   Sami PDF-ovi su u `assets/05.08/Besplatni resursi/` — uploadujte ih u
-   MailerLite (ne na sajt, vidi objašnjenje zašto ispod) i povežite sa
-   odgovarajućom formom kroz automatizaciju.
+   Sami PDF-ovi su u `assets/05.08/Besplatni resursi/` — ne stavljaju se na sajt,
+   Sanja ih šalje ručno na zahtev.
 
    **Napomena:** u PDF-u „Kako govoriti bez gubitka sebe“, strana 6, nalazi se
    vaša interna beleška „BONUS: MATERIJAL ZA INSTAGRAM PROMOCIJU“ sa predlogom
@@ -144,53 +143,23 @@ Originali koje ste poslali stoje u `assets/05.08/Kartice/`.
 
 Parovi su: jasnoća, pravac, oslonac, granice, mi, moj glas, šansa, smirivanje.
 
-## Preuzimanje uz e-mail i newsletter
+## Besplatni resursi (slanje na zahtev)
 
-**Zašto ovo ne može samo sajt.** Sajt je statičan — nema server iza sebe, pa ne
-može ni da zapamti e-mail adresu ni da pošalje poštu. Za to je potreban servis.
+Sajt nije povezan sa MailerLite-om (free plan ima limit od 3 automatizacije).
+Na `resursi.html` svaka kartica ima dugme „Zatražite vodič“ koje otvara dijalog
+(`#zahtev-dialog`) sa poljima ime, prezime i e-mail. Forma se šalje preko
+**Netlify Forms** (forma `zahtev-materijala`, `data-netlify` u `resursi.html`) (polje `materijal` kaže koji je materijal
+tražen); Sanja zatim ručno šalje PDF. Kod je u `main.js` (blok „Zahtev za
+besplatni materijal“).
 
-**I jedna zamka koju treba znati.** Ako PDF stoji na sajtu, na primer na adresi
-`.../assets/preuzimanja/vision-board.pdf`, svako ko dođe do te adrese skine ga
-bez ostavljanja mejla — dovoljno je da neko podeli link. Zato **PDF-ove ne treba
-stavljati na sajt.** Uploadujete ih u servis, a servis ih šalje na mejl tek kada
-se osoba prijavi. Tako uslov zaista važi.
+**Jednokratno podešavanje na Netlify-ju:** *Project configuration → Notifications
+→ Form submission notifications → Add → Email notification* → adresa
+`sgterapeut@gmail.com`, forma `zahtev-materijala`. Dok se to ne podesi, zahtevi
+se samo čuvaju u *Forms* tabu (besplatno 100 zahteva mesečno).
 
-### Kako se to postavlja (predlog: MailerLite)
-
-MailerLite je besplatan do 1.000 pretplatnika i ima gotovu funkciju za baš ovo.
-
-1. Otvorite nalog na **mailerlite.com** i potvrdite svoju e-mail adresu (na
-   Sanjinu adresu, ne na adresu osobe koja pomaže oko sajta).
-2. Napravite po jednu grupu pretplatnika za svaki od 6 vodiča — npr. „Vision
-   Board“, „Kako govoriti bez gubitka sebe“, „5 jezika ljubavi“, „Toksični
-   odnosi“, „Visoka senzitivnost“, „Zdrava empatija“.
-3. Za svaki materijal napravite **formu** (*Forms → Embedded form*). MailerLite
-   vam da adresu na koju se forma šalje — nešto poput
-   `https://assets.mailerlite.com/jsonp/123456/forms/789/subscribe`.
-4. U `resursi.html` pronađite svih 6 mesta sa `action="ZAMENITI-ADRESOM-FORME"`
-   (po jedno za svaku karticu) i upišite odgovarajuću adresu. Isto polje postoji
-   i na Početnoj, za opštu prijavu na newsletter.
-5. Uploadujte PDF u MailerLite (*File manager*) i napravite automatizaciju:
-   *Automation → When subscriber joins a group → Send email* sa linkom ka PDF-u.
-6. Uključite **dvostruku potvrdu** (*double opt-in*). Time osoba potvrđuje adresu
-   klikom u mejlu — to je i dokaz pristanka koji traži zakon.
-
-Alternative koje rade isto: **Brevo** (bivši Sendinblue, besplatno 300 mejlova
-dnevno) i **ConvertKit**. Postupak je isti, menjaju se samo nazivi ekrana.
-
-### Ako želite da preskočite servis
-
-Najjednostavnija varijanta bez ijednog naloga: PDF-ove stavite u
-`assets/preuzimanja/` i linkujte ih direktno. Tada nema uslova e-mail adrese,
-ali ni sistema koji treba održavati. Uvek se može dodati kasnije — raspored
-stranice je isti.
-
-### Pravni deo
-
-U politici privatnosti već stoji odeljak o newsletteru. Dopunite ga nazivom
-servisa koji izaberete (označeno komentarom `ZAMENITI`) — po Zakonu o zaštiti
-podataka o ličnosti treba navesti kome se podaci prosleđuju, a MailerLite je
-obrađivač sa serverima van Srbije.
+Bez JS-a dugme je običan `mailto:` link. Novi materijal = nova kartica u
+`resursi.html` (kopirati postojeću, promeniti naslov i `data-vodic`). PDF-ove ne
+stavljati na sajt — ostaju kod Sanje.
 
 ## Kontakt forma
 
