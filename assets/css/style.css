@@ -394,6 +394,12 @@ p, li, blockquote, h1, h2, h3, dd { overflow-wrap: break-word; }
 /* Ista mreža, slika sa desne strane. */
 .about-grid--flip { grid-template-columns: 1fr 340px; }
 
+/* Šira kolona za plakat sa tekstom (stranica Istraživanje). */
+@media (min-width: 821px) {
+  .about-grid--poster { grid-template-columns: 420px 1fr; }
+  .about-grid--flip.about-grid--poster { grid-template-columns: 1fr 420px; }
+}
+
 /* Grafike (naslovnice, plakati) se vide cele — bez fasetnog isecanja,
    jer bi ono odseklo tekst. */
 .about-grid .portrait--fit,

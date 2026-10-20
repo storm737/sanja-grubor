@@ -57,6 +57,21 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://sanjagrubor.com/blog-hemija-biologija-patologija.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sanjagrubor.com/blog-muskarci-mars-zene-venera.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sanjagrubor.com/istrazivanje.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://sanjagrubor.com/resursi.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
