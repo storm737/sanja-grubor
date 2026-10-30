@@ -228,6 +228,73 @@
     });
   });
 
+  /* --- Prozor sa pozivom na istraživanje -----------------------------------
+     Pojavljuje se po otvaranju sajta, a zatim povremeno (najviše 3 puta po
+     poseti, ne češće nego na svakih 5 minuta), i na istoj stranici i pri
+     prelasku na drugu. Ko klikne na upitnik, ne vidi ga više (localStorage).
+     Ne prikazuje se na samoj stranici Istraživanje. */
+  var ankLink = "https://forms.gle/MRETikuF9mKagfCY9";
+  var ANK_RAZMAK = 5 * 60 * 1000;
+  var ANK_NAJVISE = 3;
+
+  var ankCitaj = function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+  var ankPisi = function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} };
+  var ankPopunjena = function () { try { return localStorage.getItem("anketa-popunjena") === "1"; } catch (e) { return false; } };
+
+  var ankPrikazi = function () {
+    if (ankPopunjena() || document.querySelector("dialog[open]")) { return; }
+
+    ankPisi("anketa-puta", String((parseInt(ankCitaj("anketa-puta"), 10) || 0) + 1));
+    ankPisi("anketa-vreme", String(Date.now()));
+
+    var ank = document.createElement("dialog");
+    ank.className = "anketa";
+    ank.setAttribute("aria-labelledby", "anketa-naslov");
+    ank.innerHTML =
+      '<button class="anketa-zatvori" type="button" aria-label="Zatvori" data-ank-zatvori>&times;</button>' +
+      '<img class="anketa-slika" src="assets/img/istrazivanje-foto.jpg" alt="" width="1024" height="1536">' +
+      '<div class="anketa-telo">' +
+        '<p class="kicker"><span class="facet"></span> <span>Istraživanje</span></p>' +
+        '<h2 id="anketa-naslov">Učestvujte u istraživanju o partnerskim odnosima</h2>' +
+        '<p>Vaša iskustva, mišljenja i stavovi su mi važni. Upitnik je anoniman, a učešće dobrovoljno.</p>' +
+        '<div class="btn-row">' +
+          '<a class="btn" href="' + ankLink + '" target="_blank" rel="noopener" data-ank-upitnik autofocus>Popunite upitnik</a>' +
+          '<a class="btn btn--ghost" href="istrazivanje.html">Saznajte više</a>' +
+        '</div>' +
+        '<button class="anketa-nesada" type="button" data-ank-zatvori>Ne sada</button>' +
+      '</div>';
+    document.body.appendChild(ank);
+
+    Array.prototype.forEach.call(ank.querySelectorAll("[data-ank-zatvori]"), function (b) {
+      b.addEventListener("click", function () { ank.close(); });
+    });
+    ank.addEventListener("click", function (event) { if (event.target === ank) { ank.close(); } });
+    ank.querySelector("[data-ank-upitnik]").addEventListener("click", function () {
+      try { localStorage.setItem("anketa-popunjena", "1"); } catch (e) {}
+      ank.close();
+    });
+    ank.addEventListener("close", function () {
+      ank.remove();
+      ankPlaniraj();
+    });
+
+    ank.showModal();
+  };
+
+  var ankPlaniraj = function () {
+    if (ankPopunjena() || (parseInt(ankCitaj("anketa-puta"), 10) || 0) >= ANK_NAJVISE) { return; }
+    var poslednji = parseInt(ankCitaj("anketa-vreme"), 10);
+    var cekaj = poslednji ? Math.max(ANK_RAZMAK - (Date.now() - poslednji), 1500) : 1500;
+    window.setTimeout(function () {
+      if (document.querySelector("dialog[open]")) { window.setTimeout(ankPlaniraj, 30000); return; }
+      ankPrikazi();
+    }, cekaj);
+  };
+
+  if (!/istrazivanje(\.html)?\/?$/.test(location.pathname) && typeof HTMLDialogElement === "function") {
+    ankPlaniraj();
+  }
+
   /* --- Godina u podnožju ------------------------------------------------- */
   var year = document.querySelector("[data-year]");
   if (year) { year.textContent = String(new Date().getFullYear()); }

@@ -67,6 +67,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://sanjagrubor.com/blog-kompromis-ili-konsenzus.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sanjagrubor.com/blog-nema-lakog-puta.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://sanjagrubor.com/istrazivanje.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
